@@ -1,18 +1,20 @@
 import pytest
 
-class User():
+
+class User:
 
     def __init__(self):
         self.name = None
         self.second_name = None
 
     def create(self):
-        self.name = 'Anna'
-        self.second_name = 'Murga'
+        self.name = "Anna"
+        self.second_name = "Murga"
 
     def remove(self):
-        self.name = ''
-        self.second_name = ''
+        self.name = ""
+        self.second_name = ""
+
 
 @pytest.fixture
 def user():
@@ -22,4 +24,3 @@ def user():
     yield user
 
     user.remove()
-    
