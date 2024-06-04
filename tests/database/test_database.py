@@ -52,7 +52,7 @@ def test_product_delete():
 def test_detailed_orders():
     db = Database()
     orders = db.get_detailed_orders()
-    #print('Zamovlennya', orders)
+    print('Замовлення', orders)
     # Check quantity of orders equal to 1
     assert len(orders) == 1
 
