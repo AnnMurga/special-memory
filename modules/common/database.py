@@ -55,4 +55,32 @@ class Database():
         self.cursor.execute(query)
         record = self.cursor.fetchall()
         return record
-             
+    
+    def insert_customer(self, id, name, address, city, postalCode, country):
+        query = f"INSERT OR REPLACE INTO customers (id, name, address, city, postalCode, country) \
+            VALUES ({id}, '{name}', '{address}', '{city}', '{postalCode}', '{country}')"
+        self.cursor.execute(query)
+        self.connection.commit()
+
+    def select_customer_name_by_id(self, customer_id):
+        query = f"SELECT name FROM customers WHERE id = {customer_id}"
+        self.cursor.execute(query)
+        record = self.cursor.fetchall()
+        return record
+    
+    def insert_order(self, id, customer_id, product_id, order_date):
+        query = f"INSERT OR REPLACE INTO orders (id, customer_id, product_id, order_date) \
+            VALUES ({id}, {customer_id}, {product_id}, {order_date})"
+        self.cursor.execute(query)
+        self.connection.commit()
+
+    def select_detailed_order_by_id(self, order_id):
+        query = f"SELECT orders.id, customers.name, products.name, \
+                products.description, orders.order_date \
+                FROM orders \
+                JOIN customers ON orders.customer_id = customers.id \
+                JOIN products ON orders.product_id = products.id \
+                      WHERE orders.id = {order_id}"
+        self.cursor.execute(query)
+        record = self.cursor.fetchall()
+        return record

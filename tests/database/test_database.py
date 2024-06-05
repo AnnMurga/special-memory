@@ -36,7 +36,7 @@ def test_product_insert():
     db = Database()
     db.insert_product(4, 'печиво', 'солодке', 30)
     water_qnt = db.select_product_qnt_by_id(4)
-
+    
     assert water_qnt[0][0] == 30
 
 @pytest.mark.database
