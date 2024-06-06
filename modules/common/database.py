@@ -1,9 +1,13 @@
 import sqlite3
 
-class Database():
+
+class Database:
 
     def __init__(self):
-        self.connection = sqlite3.connect(r'C:\\Users\\Ann\\Python\\Projects\\FirstProject\\special-memory' + r'\\become_qa_auto.db')
+        self.connection = sqlite3.connect(
+            r"C:\\Users\\Ann\\Python\\Projects\\FirstProject\\special-memory"
+            + r"\\become_qa_auto.db"
+        )
         self.cursor = self.connection.cursor()
 
     def test_connection(self):
@@ -11,19 +15,20 @@ class Database():
         self.cursor.execute(sqlite_select_Query)
         record = self.cursor.fetchall()
         print(f"Connected successfully. SQLite Database Verion is: {record}")
+        return record
 
     def get_all_users(self):
         query = "SELECT name, address, city FROM customers"
         self.cursor.execute(query)
         record = self.cursor.fetchall()
         return record
-    
+
     def get_user_address_by_name(self, name):
         query = f"SELECT address, city, postalCode, country FROM customers WHERE name = '{name}'"
         self.cursor.execute(query)
         record = self.cursor.fetchall()
         return record
-    
+
     def update_product_qnt_by_id(self, product_id, qnt):
         query = f"UPDATE products SET quantity = {qnt} WHERE id = {product_id}"
         self.cursor.execute(query)
@@ -55,7 +60,7 @@ class Database():
         self.cursor.execute(query)
         record = self.cursor.fetchall()
         return record
-    
+
     def insert_customer(self, id, name, address, city, postalCode, country):
         query = f"INSERT OR REPLACE INTO customers (id, name, address, city, postalCode, country) \
             VALUES ({id}, '{name}', '{address}', '{city}', '{postalCode}', '{country}')"
@@ -67,7 +72,7 @@ class Database():
         self.cursor.execute(query)
         record = self.cursor.fetchall()
         return record
-    
+
     def insert_order(self, id, customer_id, product_id, order_date):
         query = f"INSERT OR REPLACE INTO orders (id, customer_id, product_id, order_date) \
             VALUES ({id}, {customer_id}, {product_id}, {order_date})"
@@ -84,3 +89,10 @@ class Database():
         self.cursor.execute(query)
         record = self.cursor.fetchall()
         return record
+
+    def get_count_orders(self):
+        query = f"SELECT COUNT(*) FROM orders"
+        self.cursor.execute(query)
+        record = self.cursor.fetchall()
+        return record
+    
