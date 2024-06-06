@@ -1,4 +1,3 @@
-This project was created while taking the course QA Auto (Prometheus/GlobalLogic).
 The purpose of this project is to apply the knowledge and skills gained during the course QA Auto (Prometheus/GlobalLogic).
 
 The project was written in Python.
