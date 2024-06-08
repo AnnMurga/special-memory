@@ -1,55 +1,82 @@
 import pytest
 import time
 from modules.ui.page_objects.sign_in_page import SignInPage
-from modules.ui.page_objects.sign_in_page import NovaPoshta
+from modules.ui.page_objects.sign_in_page import Epicentr
 
 
 
 @pytest.mark.ui
 def test_check_incorrect_username_page_object():
-    # створення об'єкту сторінки
+
+    # Create page object
     sign_in_page = SignInPage()
 
-    # відкриваємо сторінку https://github.com/login
+    # Open page https://github.com/login
     sign_in_page.go_to()
 
-    # виконуємо спробу увійти в систему GitHub
+    # Try to log in to GitHub
     sign_in_page.try_login("page_object@gmail.com", "wrong_password")
 
-    # перевіряємо, що назва сторінки така, яку ми очікуємо
+    # Check that the title page is as expected
     assert sign_in_page.check_title("Sign in to GitHub · GitHub")
 
-    # закриваємо браузер
+    # Close browser
     sign_in_page.close()
 
 
-# Additional tests for Nova Poshta
+# Additional tests for Epicentr
 
 
-@pytest.mark.ui_np
-def test_check_incorrect_cargo_number_page_object():
-    # створення об'єкту сторінки
-    np_page = NovaPoshta()
+@pytest.mark.ui
+def test_check_correct_page_header_page_object():
 
-    # відкриваємо сторінку https://novaposhta.ua/
-    np_page.go_to()
+    # Create page object
+    epic_page = Epicentr()
 
-    time.sleep(3)
-
-    np_page.close_banner()
-
-    # виконуємо спробу знайти неіснуючу накладну
-    np_page.try_search_package(12345546)
+    # Open page https://epicentrk.ua/
+    epic_page.go_to()
 
     time.sleep(3)
 
-    # перевіряємо, що назва сторінки така, яку ми очікуємо
-    assert np_page.check_tracking_error_message(
-        "Ми не знайшли посилку за таким номером. Можливо, вона ще не передана для відправлення, або номер некоректний. \
-            Перевірте, чи відповідає вказаний номер можливому формату: 59500000031324 або AENM0002497278NPI."
-    )
+    # Try to search product
+    search_product = 'Шезлонг'
+    epic_page.try_search_product(search_product)
 
     time.sleep(3)
 
-    # закриваємо браузер
-    np_page.close()
+    # Check that the page header is as expected
+    page_header = 'Шезлонги та лежаки'
+
+    assert epic_page.check_page_header(page_header)
+
+    time.sleep(3)
+
+    # Close browser
+    epic_page.close()
+
+
+@pytest.mark.ui_epic
+def test_check_product_can_be_ordered_page_object():
+    # Create page object
+    epic_page = Epicentr()
+
+    # Open page https://epicentrk.ua/
+    epic_page.go_to()
+
+    time.sleep(3)
+
+    # Try to search product
+    search_product = 'Шезлонг'
+    epic_page.try_search_product(search_product)
+
+    time.sleep(3)
+
+    # Check order
+    title = 'ОФОРМЛЕННЯ ЗАМОВЛЕННЯ'
+    
+    assert epic_page.check_order_product(title)
+
+    time.sleep(3)
+
+    # Close browser
+    epic_page.close()
