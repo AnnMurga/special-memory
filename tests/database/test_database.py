@@ -2,6 +2,7 @@ import pytest
 from modules.common.database import Database
 from sqlite3 import OperationalError
 
+
 @pytest.mark.database
 def test_database_connection():
     db = Database()
@@ -17,6 +18,7 @@ def test_check_all_users():
   
     assert users[0][0] == 'Sergii'
 
+
 @pytest.mark.database
 def test_check_user_sergii():
     db = Database()
@@ -27,6 +29,7 @@ def test_check_user_sergii():
     assert user[0][2] == '3127'
     assert user[0][3] == 'Ukraine'
 
+
 @pytest.mark.database
 def test_product_qnt_update():
     db = Database()
@@ -34,6 +37,7 @@ def test_product_qnt_update():
     product_qnt = db.select_product_qnt_by_id(1)
 
     assert product_qnt[0][0] == 25
+
 
 @pytest.mark.database
 def test_product_insert():
@@ -43,6 +47,7 @@ def test_product_insert():
     
     assert product_qnt[0][0] == 30
 
+
 @pytest.mark.database
 def test_product_delete():
     db = Database()
@@ -51,6 +56,7 @@ def test_product_delete():
     qnt = db.select_product_qnt_by_id(99)
 
     assert len(qnt) == 0
+
 
 @pytest.mark.database
 def test_detailed_orders():
@@ -67,7 +73,9 @@ def test_detailed_orders():
     assert orders[0][2] == 'солодка вода'
     assert orders[0][3] == 'з цукром'
 
+
 # Additional tests
+
 
 @pytest.mark.database_add
 def test_product_not_insert_with_incorrect_id_type():

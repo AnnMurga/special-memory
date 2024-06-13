@@ -6,6 +6,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 import time
 
+
 @pytest.mark.ui
 def test_check_incorrect_username():
     #Створення об'єкту для керування браузером
@@ -39,3 +40,4 @@ def test_check_incorrect_username():
 
     # закриваємо браузер
     driver.close()
+    
