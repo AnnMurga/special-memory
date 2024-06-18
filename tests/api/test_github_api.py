@@ -2,37 +2,37 @@ import pytest
 
 
 @pytest.mark.api
-def test_user_exists(github_api):
-    user = github_api.get_user("defunkt")
+def test_user_exists(github_api_client):
+    user = github_api_client.get_user("defunkt")
 
     assert user["login"] == "defunkt"
 
 
 @pytest.mark.api
-def test_user_not_exists(github_api):
-    r = github_api.get_user("butenkosergii")
+def test_user_not_exists(github_api_client):
+    r = github_api_client.get_user("butenkosergii")
 
     assert r["message"] == "Not Found"
 
 
 @pytest.mark.api
-def test_repo_can_be_found(github_api):
-    r = github_api.search_repo("become-qa-auto")
+def test_repo_can_be_found(github_api_client):
+    r = github_api_client.search_repo("become-qa-auto")
 
-    assert r["total_count"] == 57
+    assert r["total_count"] == 58
     assert "become-qa-auto" in r["items"][0]["name"]
 
 
 @pytest.mark.api
-def test_repo_cannot_be_found(github_api):
-    r = github_api.search_repo("sergiibutenko_repo_none_exist")
+def test_repo_cannot_be_found(github_api_client):
+    r = github_api_client.search_repo("sergiibutenko_repo_none_exist")
 
     assert r["total_count"] == 0
 
 
 @pytest.mark.api
-def test_repo_with_single_char_be_found(github_api):
-    r = github_api.search_repo("s")
+def test_repo_with_single_char_be_found(github_api_client):
+    r = github_api_client.search_repo("s")
     
     assert r["total_count"] != 0
 
@@ -41,8 +41,8 @@ def test_repo_with_single_char_be_found(github_api):
 
 
 @pytest.mark.api_add
-def test_emoji(github_api):
-    r = github_api.get_emojis()
+def test_emoji(github_api_client):
+    r = github_api_client.get_emojis()
 
     assert (
         r["zzz"]
@@ -51,32 +51,32 @@ def test_emoji(github_api):
 
 
 @pytest.mark.api_add
-def test_list_commit_can_be_found(github_api):
-    r = github_api.get_list_commit("AnnMurga", "special-memory")
+def test_list_commit_can_be_found(github_api_client):
+    r = github_api_client.get_list_commit("AnnMurga", "special-memory")
     body = r.json()
 
     assert r.status_code == 200
-    assert body[0]["commit"]["author"]["name"] == "AnnMurga"
+    assert body[0]["commit"]["author"]["name"] == "Anna Murga"
 
 
 @pytest.mark.api_add
-def test_list_commit_cannot_be_found(github_api):
-    r = github_api.get_list_commit("AnMur", "memory")
+def test_list_commit_cannot_be_found(github_api_client):
+    r = github_api_client.get_list_commit("AnMur", "memory")
 
     assert r.status_code == 404
 
 
 @pytest.mark.api_add
-def test_list_commit_cannot_be_found(github_api):
-    r = github_api.get_list_commit("", "")
+def test_list_commit_cannot_be_found(github_api_client):
+    r = github_api_client.get_list_commit("", "")
     body = r.json()
 
     assert body["message"] == "Not Found"
 
 
 @pytest.mark.api_add
-def test_list_branches_for_head_commit_can_be_found(github_api):
-    r = github_api.get_list_branches_for_HEAD_commit(
+def test_list_branches_for_head_commit_can_be_found(github_api_client):
+    r = github_api_client.get_list_branches_for_HEAD_commit(
         "AnnMurga", "special-memory", "e072bdb7ebc6bf6ef196e34559c8ff841c88af41"
     )
 
@@ -84,8 +84,8 @@ def test_list_branches_for_head_commit_can_be_found(github_api):
 
 
 @pytest.mark.api_add
-def test_list_branches_for_head_commit_cannot_be_found(github_api):
-    r = github_api.get_list_branches_for_HEAD_commit(
+def test_list_branches_for_head_commit_cannot_be_found(github_api_client):
+    r = github_api_client.get_list_branches_for_HEAD_commit(
         "AnnMurga", "special-memory", "qererwedfbc6bf6ef196e34559c8ff841c88af41"
     )
 
